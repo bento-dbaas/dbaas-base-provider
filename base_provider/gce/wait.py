@@ -1,13 +1,13 @@
 from base_provider.base import BaseProvider
 
+
 class Wait(BaseProvider):
 
     client = None
     credential = None
 
-    def __init__(self, client, credential):
-        self.client = client
-        self.credential = credential
+    def __init__(self):
+        pass
 
     def wait_zone_operation(self, zone, operation):
         op = self.client.zoneOperations().wait(
