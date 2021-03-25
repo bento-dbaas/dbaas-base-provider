@@ -1,8 +1,14 @@
+from time import sleep
+from socket import timeout
+
 from .base import BaseProviderObject
 from .base import MongoClient
 
 
 class BaseProvider(BaseProviderObject):
+    MAX_OPERATION_RETRY = 3
+    SECONDS_OPERATION_RETRY = 60
+
     def __init__(self, environment, auth_info=None):
         self.environment = environment
         self._client = None
@@ -53,20 +59,68 @@ class BaseProvider(BaseProviderObject):
     def provider(self):
         return self.get_provider()
 
-    def wait_zone_operation(self, zone, operation):
-        op = self.client.zoneOperations().wait(
+    def wait_operation(self, operation=None, region=None, zone=None):
+        op = self._wait(
+            operation=operation,
+            region=region,
+            zone=zone
+        )
+        return self._check_operation_status(op)
+
+    def _wait(self, operation, region=None, zone=None):
+        if not operation:
+            raise Exception('operation must be provided')
+
+        retry = 0
+        if zone:
+            op = self._get_wait_zone_operation(
+                zone=zone,
+                operation=operation
+            )
+        elif region:
+            # region operations are not implemnented yet
+            raise NotImplementedError
+        else:
+            op = self._get_wait_global_operation(
+                operation=operation
+            )
+
+        while retry <= self.MAX_OPERATION_RETRY:
+            try:
+                operation = op.execute()
+            except Exception as ex:
+                if isinstance(ex, timeout):
+                    sleep(self.SECONDS_OPERATION_RETRY)
+                    retry += 1
+                else:
+                    raise Exception(ex)
+            else:
+                return operation
+
+        raise Exception('Error while wait %s operation' % operation)
+
+    def _get_wait_zone_operation(self, zone, operation, execute_request=False):
+        operation = self.client.zoneOperations().wait(
             project=self.credential.project,
             zone=zone,
             operation=operation
-        ).execute()
-        return self._check_operation_status(op)
+        )
 
-    def wait_global_operation(self, operation):
-        op = self.client.globalOperations().wait(
+        if execute_request:
+            return operation.execute()
+
+        return operation
+
+    def _get_wait_global_operation(self, operation, execute_request=False):
+        operation = self.client.globalOperations().wait(
             project=self.credential.project,
             operation=operation
-        ).execute()
-        self._check_operation_status(op)
+        )
+
+        if execute_request:
+            return operation.execute()
+
+        return operation
 
     def _check_operation_status(self, operation):
         if operation.get('error'):

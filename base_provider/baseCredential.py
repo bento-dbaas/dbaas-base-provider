@@ -1,6 +1,7 @@
 from .base import BaseProviderObject
 from .base import MongoClient
 
+
 class BaseCredential(BaseProviderObject):
 
     MONGODB_PARAMS = None
