@@ -1,2 +1,2 @@
-pytest
-pytest-cov
+mongoengine==0.15.0
+pymongo==3.6.1

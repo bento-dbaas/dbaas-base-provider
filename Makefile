@@ -22,7 +22,7 @@ clean-pyc:
 	find . -name '*~' -exec rm -f {} +
 
 test:
-	py.test -v --cov-config .coveragerc --cov-report html --cov dbaas_nfsaas ./tests/
+	coverage run --source=./ -m unittest discover --start-directory ./tests -p "*.py"
 
 release:
 	python setup.py sdist upload
