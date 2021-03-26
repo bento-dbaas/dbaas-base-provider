@@ -9,11 +9,12 @@ class BaseProvider(BaseProviderObject):
     MAX_OPERATION_RETRY = 3
     SECONDS_OPERATION_RETRY = 60
 
-    def __init__(self, environment, auth_info=None):
+    def __init__(self, environment, engine=None, auth_info=None):
         self.environment = environment
         self._client = None
         self._credential = None
         self._commands = None
+        self.engine = engine
         self.auth_info = auth_info
 
     @property
