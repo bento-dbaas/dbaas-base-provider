@@ -1,7 +1,7 @@
 from collections import OrderedDict
 
-from .base import BaseProviderObject
-from .base import MongoClient
+from base_provider.base import BaseProviderObject
+from base_provider.base import MongoClient
 
 
 class BaseCredential(BaseProviderObject):
@@ -44,7 +44,8 @@ class BaseCredential(BaseProviderObject):
                 client = MongoClient(**self.MONGODB_PARAMS)
                 self._db = client[self.MONGODB_DB]
             else:
-                raise Exception('Invalid provider type')
+                # new provider needs implementation
+                raise NotImplementedError
         return self._db
 
     @property
