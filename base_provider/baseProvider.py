@@ -79,8 +79,10 @@ class BaseProvider(BaseProviderObject):
                 operation=operation
             )
         elif region:
-            # region operations are not implemnented yet
-            raise NotImplementedError
+            op = self._get_wait_region_operation(
+                region=region,
+                operation=operation
+            )
         else:
             op = self._get_wait_global_operation(
                 operation=operation
@@ -104,6 +106,19 @@ class BaseProvider(BaseProviderObject):
         operation = self.client.zoneOperations().wait(
             project=self.credential.project,
             zone=zone,
+            operation=operation
+        )
+
+        if execute_request:
+            return operation.execute()
+
+        return operation
+
+    def _get_wait_region_operation(self, region, operation,
+                                   execute_request=False):
+        operation = self.client.regionOperations().wait(
+            project=self.credential.project,
+            region=region,
             operation=operation
         )
 
