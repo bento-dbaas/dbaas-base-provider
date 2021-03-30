@@ -28,7 +28,6 @@ clean-pyc:
 
 test:
 	coverage run --source=./ -m unittest discover --start-directory ./tests -p "*.py"
-	coverage json
 	coverage report
 
 release:

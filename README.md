@@ -1,0 +1,1 @@
+[![Build Status](https://www.travis-ci.com/bento-dbaas/dbaas-base-provider.svg?branch=master)](https://www.travis-ci.com/bento-dbaas/dbaas-base-provider) [![Coverage Status](https://coveralls.io/repos/github/bento-dbaas/dbaas-base-provider/badge.svg?branch=master)](https://coveralls.io/github/bento-dbaas/dbaas-base-provider?branch=master)
