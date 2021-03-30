@@ -28,6 +28,8 @@ clean-pyc:
 
 test:
 	coverage run --source=./ -m unittest discover --start-directory ./tests -p "*.py"
+	coverage xml
+	coverage report
 
 release:
 	python setup.py sdist bdist_wheel
@@ -35,7 +37,7 @@ release:
 
 release_globo:
 	python setup.py sdist bdist_wheel
-	twine upload --repository-url ${GLOBO_INTERNAL_PYPI_URL}  dist/*
+	twine upload --repository-url ${GLOBO_INTERNAL_PYPI_URL} dist/*
 
 dist: clean
 	python setup.py sdist
