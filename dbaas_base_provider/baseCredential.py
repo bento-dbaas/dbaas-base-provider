@@ -62,4 +62,6 @@ class BaseCredential(BaseProviderObject):
 
     @property
     def content(self):
+        if not self._content:
+            raise NotImplementedError
         return self._content
