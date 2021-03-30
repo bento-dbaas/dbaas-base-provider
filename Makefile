@@ -1,3 +1,8 @@
+ifneq (,$(wildcard ./.env))
+    include .env
+    export
+endif
+
 .PHONY: clean-pyc clean-build docs clean
 
 help:
@@ -28,6 +33,9 @@ release:
 	python setup.py sdist bdist_wheel
 	twine upload dist/*
 
+release_globo:
+	python setup.py sdist bdist_wheel
+	twine upload --repository-url ${GLOBO_INTERNAL_PYPI_URL}  dist/*
 
 dist: clean
 	python setup.py sdist
