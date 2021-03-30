@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from base_provider import BaseCredential
-from base_provider.base import BaseProviderObject
+from dbaas_base_provider import BaseCredential
+from dbaas_base_provider.base import BaseProviderObject
 from unittest.mock import patch, MagicMock, PropertyMock
 
 from fakes import MONGO_ENDPOINT, MONGODB_DB, MONGODB_HOST, MONGODB_PORT,\
@@ -31,7 +31,7 @@ class TestCredential(TestCase):
         self.assertRaises(NotImplementedError, lambda: cred.db)
 
 
-    @patch('base_provider.baseCredential.MongoClient')
+    @patch('dbaas_base_provider.baseCredential.MongoClient')
     def test_credential_hp_connect_with_mongo_by_endpoint(self, mc):
         cred = BaseCredential('host_provider', PROVIDER, ENVIRONMENT)
         cred.MONGO_ENDPOINT = self.MONGO_ENDPOINT
@@ -41,7 +41,7 @@ class TestCredential(TestCase):
 
         self.assertTrue(mc.called)
 
-    @patch('base_provider.baseCredential.MongoClient')
+    @patch('dbaas_base_provider.baseCredential.MongoClient')
     def test_credential_hp_connect_with_mongo_by_mongo_credentials(self, mc):
         cred = BaseCredential('host_provider', PROVIDER, ENVIRONMENT)
         cred.MONGODB_HOST = self.MONGODB_HOST

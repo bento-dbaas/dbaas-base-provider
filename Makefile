@@ -25,11 +25,9 @@ test:
 	coverage run --source=./ -m unittest discover --start-directory ./tests -p "*.py"
 
 release:
-	python setup.py sdist upload
+	python setup.py sdist bdist_wheel
+	twine upload dist/*
 
-release_globo:
-	python setup.py sdist upload -r ipypiglobo
-	python setup.py sdist upload -r pypiglobo
 
 dist: clean
 	python setup.py sdist
