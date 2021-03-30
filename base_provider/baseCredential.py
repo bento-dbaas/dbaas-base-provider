@@ -1,7 +1,7 @@
 from collections import OrderedDict
 
-from base_provider.base import BaseProviderObject
-from base_provider.base import MongoClient
+from .base import BaseProviderObject
+from .base import MongoClient
 
 
 class BaseCredential(BaseProviderObject):
@@ -59,7 +59,7 @@ class BaseCredential(BaseProviderObject):
         return ("credentials"
                 if self.provider_type == "volume_provider"
                 else "credential")
-    
+
     @property
     def content(self):
         return self._content
