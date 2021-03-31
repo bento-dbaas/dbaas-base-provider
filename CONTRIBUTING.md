@@ -13,4 +13,4 @@
 
 ## Testing
 
-* Please make sure tests pass with `./script/test`
+* Please make sure tests pass with `make test`

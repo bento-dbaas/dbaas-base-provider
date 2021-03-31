@@ -37,7 +37,7 @@ class TestCredential(TestCase):
         cred.MONGO_ENDPOINT = self.MONGO_ENDPOINT
         cred.MONGODB_DB = self.MONGODB_DB
         mc.return_value = {self.MONGODB_DB: ""}
-        db = cred.db
+        cred.db
 
         self.assertTrue(mc.called)
 
@@ -84,7 +84,7 @@ class TestCredential(TestCase):
         mc.return_value = {self.MONGODB_DB: {"credentials": FAKE_CREDENTIAL}}
 
         self.assertRaises(NotImplementedError, lambda: cred.content)
-    
+
     @patch('dbaas_base_provider.baseCredential.MongoClient')
     def test_content_prop(self, mc):
         fake_content = "fake_cont"
@@ -95,4 +95,3 @@ class TestCredential(TestCase):
         mc.return_value = {self.MONGODB_DB: {"credentials": FAKE_CREDENTIAL}}
         cred._content = fake_content
         self.assertEqual(cred.content, fake_content)
-        
