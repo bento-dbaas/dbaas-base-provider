@@ -32,7 +32,8 @@ class BaseProvider(BaseProviderObject):
     def credential_add(self, content):
         credential_cls = self.get_credential_add()
         credential = credential_cls(self.provider, self.environment, content)
-        is_valid, error = credential.is_valid()
+
+        is_valid, error = credential.is_valid(content)
         if not is_valid:
             return False, error
 
@@ -70,7 +71,7 @@ class BaseProvider(BaseProviderObject):
 
     def _wait(self, operation, region=None, zone=None):
         if not operation:
-            raise Exception('operation must be provided')
+            raise EnvironmentError('operation must be provided')
 
         retry = 0
         if zone:
@@ -100,7 +101,7 @@ class BaseProvider(BaseProviderObject):
             else:
                 return operation
 
-        raise Exception('Error while wait %s operation' % operation)
+        raise EnvironmentError('Error while wait %s operation' % operation)
 
     def _get_wait_zone_operation(self, zone, operation, execute_request=False):
         operation = self.client.zoneOperations().wait(

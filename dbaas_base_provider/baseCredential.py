@@ -16,8 +16,7 @@ class BaseCredential(BaseProviderObject):
     MONGODB_DB = None
     provider_type = None
 
-    def __init__(self, provider_type, provider, environment):
-        self.provider_type = provider_type
+    def __init__(self, provider, environment):
         self.provider = provider
         self.environment = environment
         self._db = None
