@@ -32,11 +32,11 @@ test:
 test_report: test
 	coverage report -m
 	
-release:
+release: clean
 	python setup.py sdist bdist_wheel
 	twine upload dist/*
 
-release_globo:
+release_globo: clean
 	python setup.py sdist bdist_wheel
 	twine upload --repository-url ${GLOBO_INTERNAL_PYPI_URL} dist/*
 
