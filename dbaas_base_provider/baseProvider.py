@@ -10,6 +10,7 @@ class BaseProvider(BaseProviderObject):
     SECONDS_OPERATION_RETRY = 60
 
     def __init__(self, environment, engine=None, auth_info=None):
+        super(BaseProvider, self).__init__()
         self.environment = environment
         self._client = None
         self._credential = None

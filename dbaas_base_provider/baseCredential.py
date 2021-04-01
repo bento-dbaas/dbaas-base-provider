@@ -17,6 +17,7 @@ class BaseCredential(BaseProviderObject):
     provider_type = None
 
     def __init__(self, provider, environment):
+        super(BaseCredential, self).__init__()
         self.provider = provider
         self.environment = environment
         self._db = None
