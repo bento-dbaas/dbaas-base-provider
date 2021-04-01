@@ -13,7 +13,6 @@ ENVIRONMENT = "dev"
 
 
 class TestCredential(TestCase):
-
     def setUp(self):
         self.MONGO_ENDPOINT = MONGO_ENDPOINT
         self.MONGODB_DB = MONGODB_DB

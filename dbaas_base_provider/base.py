@@ -5,8 +5,7 @@ class BaseProviderObject(object):
     _provider_type = None
 
     def __init__(self, *args, **kwargs):
-        if not self.provider_type:
-            raise EnvironmentError('Invalid provider type')
+        pass
 
     @property
     def provider_type(self):
