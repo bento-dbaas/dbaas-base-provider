@@ -3,7 +3,7 @@ from dbaas_base_provider.version import Version
 
 
 setuptools.setup(name='dbaas-base-provider',
-                 version=Version('0.0.6').number,
+                 version=Version('0.0.7').number,
                  description='Base for DBaaS providers',
                  long_description=open('README.md').read().strip(),
                  author='William Marquardt',
