@@ -1,7 +1,7 @@
 from unittest import TestCase
 from copy import copy, deepcopy
 
-from dbaas_base_provider import BaseProvider
+from dbaas_base_provider.baseProvider import BaseProvider
 from dbaas_base_provider.base import BaseProviderObject
 from unittest.mock import patch, MagicMock, PropertyMock
 
@@ -72,8 +72,8 @@ class TestProvider(TestCase):
         with self.assertRaises(NotImplementedError):
             prov.credential_add(None)
 
-    @patch('dbaas_base_provider.BaseProvider.get_credential_add')
-    @patch('dbaas_base_provider.BaseProvider.get_provider',
+    @patch('dbaas_base_provider.baseProvider.BaseProvider.get_credential_add')
+    @patch('dbaas_base_provider.baseProvider.BaseProvider.get_provider',
            new=MagicMock(return_value=FAKE_PROVIDER))
     def test_credentaial_add_valid(self, fake_cred):
         prov = BaseProvider(ENVIRONMENT, ENGINE)
@@ -87,8 +87,8 @@ class TestProvider(TestCase):
         self.assertTrue(f[0])
         self.assertEqual(f[1], FAKE_SAVE_ID)
 
-    @patch('dbaas_base_provider.BaseProvider.get_credential_add')
-    @patch('dbaas_base_provider.BaseProvider.get_provider',
+    @patch('dbaas_base_provider.baseProvider.BaseProvider.get_credential_add')
+    @patch('dbaas_base_provider.baseProvider.BaseProvider.get_provider',
            new=MagicMock(return_value=FAKE_PROVIDER))
     def test_credentaial_add_invalid(self, fake_cred):
         prov = BaseProvider(ENVIRONMENT, ENGINE)
@@ -101,8 +101,8 @@ class TestProvider(TestCase):
         self.assertFalse(f[0])
         self.assertEqual(f[1], errmsg)
 
-    @patch('dbaas_base_provider.BaseProvider.get_credential_add')
-    @patch('dbaas_base_provider.BaseProvider.get_provider',
+    @patch('dbaas_base_provider.baseProvider.BaseProvider.get_credential_add')
+    @patch('dbaas_base_provider.baseProvider.BaseProvider.get_provider',
            new=MagicMock(return_value=FAKE_PROVIDER))
     def test_credentaial_add_raises_on_save(self, fake_cred):
         prov = BaseProvider(ENVIRONMENT, ENGINE)
@@ -120,8 +120,8 @@ class TestProvider(TestCase):
         self.assertFalse(f[0])
         self.assertEqual(f[1], errmsg)
 
-@patch('dbaas_base_provider.BaseProvider.get_credential_add')
-@patch('dbaas_base_provider.BaseProvider.get_provider',
+@patch('dbaas_base_provider.baseProvider.BaseProvider.get_credential_add')
+@patch('dbaas_base_provider.baseProvider.BaseProvider.get_provider',
         new=MagicMock(return_value=FAKE_PROVIDER))
 class TestWaits(TestCase):
 

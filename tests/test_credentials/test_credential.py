@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from dbaas_base_provider import BaseCredential
+from dbaas_base_provider.baseCredential import BaseCredential
 from dbaas_base_provider.base import BaseProviderObject
 from unittest.mock import patch, MagicMock, PropertyMock
 
