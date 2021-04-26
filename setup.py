@@ -16,7 +16,10 @@ setuptools.setup(name='dbaas-base-provider',
                  },
                  url='https://github.com/bento-dbaas/dbaas-base-provider',
                  py_modules=['dbaas_base_provider'],
-                 install_requires=[],
+                 install_requires=[
+                    'mongoengine>=0.15.0',
+                    'pymongo>=3.6.1'
+                 ],
                  license='BSD 3-Clause License',
                  zip_safe=False,
                  keywords='dbaas',
