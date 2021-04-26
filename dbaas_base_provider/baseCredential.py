@@ -23,6 +23,16 @@ class BaseCredential(BaseProviderObject):
         self._db = None
         self._collection_credential = None
         self._content = None
+        self._zone = None
+
+    def __getattribute__(self, name):
+        try:
+            attr = object.__getattribute__(self, name)
+        except AttributeError as e:
+            attr = self.content.get(name)
+            if attr is None:
+                raise AttributeError(e)
+        return attr
 
     @property
     def db(self):
@@ -40,12 +50,10 @@ class BaseCredential(BaseProviderObject):
                 else:
                     client = MongoClient(self.MONGO_ENDPOINT, **params)
                 self._db = client[self.MONGODB_DB]
-            elif self.provider_type == "volume_provider":
+            else:
                 client = MongoClient(**self.MONGODB_PARAMS)
                 self._db = client[self.MONGODB_DB]
-            else:
-                # new provider needs implementation
-                raise NotImplementedError
+
         return self._db
 
     @property
@@ -56,9 +64,9 @@ class BaseCredential(BaseProviderObject):
 
     @property
     def _credential_idx(self):
-        return ("credentials"
-                if self.provider_type == "volume_provider"
-                else "credential")
+        return ("credential"
+                if self.provider_type == "host_provider"
+                else "credentials")
 
     @property
     def content(self):

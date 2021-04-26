@@ -26,9 +26,6 @@ class TestCredential(TestCase):
 
         self.assertIsInstance(cred, BaseCredential)
 
-    def test_credential_invalid_provider_db(self):
-        cred = BaseCredential(PROVIDER, ENVIRONMENT)
-        self.assertRaises(NotImplementedError, lambda: cred.db)
 
     @patch('dbaas_base_provider.baseCredential.MongoClient')
     def test_credential_hp_connect_with_mongo_by_endpoint(self, mc):
