@@ -6,8 +6,8 @@ from .base import MongoClient
 
 
 class BaseProvider(BaseProviderObject):
-    MAX_OPERATION_RETRY = 3
-    SECONDS_OPERATION_RETRY = 60
+    SECONDS_OPERATION_RETRY = 3
+    MAX_OPERATION_RETRY = SECONDS_OPERATION_RETRY * 100
 
     def __init__(self, environment, engine=None, auth_info=None):
         super(BaseProvider, self).__init__()
