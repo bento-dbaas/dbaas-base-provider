@@ -54,6 +54,16 @@ class BaseProvider(BaseProviderObject):
     def get_credential_add(self):
         raise NotImplementedError
 
+    def get_or_none_resource(self, operation, **kw):
+        try:
+            response = operation().get(**kw).execute()
+        except Exception as ex:
+            if ex.resp.status == 404:
+                return None
+            raise Exception(ex)
+
+        return response
+
     @classmethod
     def get_provider(cls):
         raise NotImplementedError
