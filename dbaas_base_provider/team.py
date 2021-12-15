@@ -26,7 +26,7 @@ class TeamClient(object):
         res = requests.get(url)
         if res.ok:
             return res.json()
-        error = 'Team not {} found.'.format(self.team_name)
+        error = 'Team {} not found.'.format(self.team_name)
         raise Exception(error)
 
     @property
