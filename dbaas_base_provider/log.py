@@ -4,11 +4,12 @@ from datetime import datetime
 
 
 def log_this(f):
-    '''
-    IMPORTANT: If you use this decorator with Flask, be sure to put it 
+    """
+    IMPORTANT: If you use this decorator with Flask, be sure to put it
     it after @route (Flask demands this to be the top decorarator)
     https://flask.palletsprojects.com/en/2.0.x/patterns/viewdecorators/
-    '''
+    """
+
     @wraps(f)
     def fw(*args, **kwargs):
         logging.info("#" * 80)
