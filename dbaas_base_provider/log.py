@@ -1,6 +1,7 @@
 import logging
 from functools import wraps
 from datetime import datetime
+from flask import request
 
 
 def log_this(f):
@@ -24,6 +25,9 @@ def log_this(f):
         logging.info("-" * 80)
         #        logging.info(f"kwargs: {kwargs}")
         logging.info("kwargs: {}".format(kwargs))
+        logging.info("-" * 80)
+        #        logging.info(f"json data: {request.get_json()}")
+        logging.info("json data: {}".format(request.get_json()))
         logging.info("=" * 80)
         retFunc = f(*args, **kwargs)
         logging.info("=" * 80)
