@@ -3,11 +3,11 @@ from socket import timeout
 
 from .base import BaseProviderObject
 from .base import MongoClient
-
+import logging
 
 class BaseProvider(BaseProviderObject):
-    SECONDS_OPERATION_RETRY = 3
-    MAX_OPERATION_RETRY = SECONDS_OPERATION_RETRY * 1000
+    SECONDS_RETRY = 3
+    MAX_RETRY = 300
 
     def __init__(self, environment, engine=None, auth_info=None):
         super(BaseProvider, self).__init__()
@@ -100,16 +100,29 @@ class BaseProvider(BaseProviderObject):
                 operation=operation
             )
 
-        while retry <= self.MAX_OPERATION_RETRY:
+        while retry <= self.MAX_RETRY:
+            attempt = 'Attempt {} of {}.'.format(retry, self.MAX_RETRY)
             try:
                 operation = op.execute()
             except Exception as ex:
                 if isinstance(ex, timeout):
-                    sleep(self.SECONDS_OPERATION_RETRY)
+                    err = 'Timeout waiting for operation. {}.'.format(attempt)
+                    logging.error(err)
                     retry += 1
+                    sleep(self.SECONDS_RETRY)
+                    continue
                 else:
+                    logging.error('Exception executing operation.')
                     raise Exception(ex)
             else:
+                if operation.get('status') in ('PENDING', 'RUNNING'):
+                    err = 'Operation [{}] is still {}. {}.'.format(
+                        operation, operation.get('status'), attempt
+                    )
+                    logging.error(err)
+                    retry += 1
+                    sleep(self.SECONDS_RETRY)
+                    continue
                 return operation
 
         raise EnvironmentError('Error while wait %s operation' % operation)
