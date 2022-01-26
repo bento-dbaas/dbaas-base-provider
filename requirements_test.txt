@@ -5,3 +5,4 @@ recordclass==0.14.3
 coverage==5.5
 coveralls==3.0.1
 recordclass==0.14.3
+mock==4.0.3
