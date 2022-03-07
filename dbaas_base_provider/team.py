@@ -42,7 +42,7 @@ class TeamClient(object):
             'cliente': team.get('cliente'),
             'team_slug_name': team.get('slug'),
             'team_id': team.get('id'),
-            'create_at': datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S'),
+            'created_at': datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S'),
             'engine': engine_name,
             'infra_name': infra_name,
             'database_name': database_name,
