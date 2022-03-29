@@ -1,6 +1,7 @@
 import logging
 from functools import wraps
 from datetime import datetime
+import uuid
 from flask import request
 
 
@@ -13,18 +14,14 @@ def log_this(f):
 
     @wraps(f)
     def fw(*args, **kwargs):
+        id = uuid.uuid4()
         logging.info("#" * 80)
-        logging.info("Function: {} | Start: {}".format(f.__name__, datetime.now()))
-        logging.info("-" * 80)
-        logging.info("args: {}".format(args))
-        logging.info("-" * 80)
-        logging.info("kwargs: {}".format(kwargs))
-        logging.info("-" * 80)
-        logging.info("json data: {}".format(request.get_json()))
-        logging.info("=" * 80)
+        logging.info("{} | Start: {} - {}".format(f.__name__, datetime.now(), id))
+        logging.info("args: {} - {}".format(args, id))
+        logging.info("kwargs: {} - {}".format(kwargs, id))
+        logging.info("json data: {} - {}".format(request.get_json(), id))
         retFunc = f(*args, **kwargs)
-        logging.info("=" * 80)
-        logging.info("Function: {} | End: {}".format(f.__name__, datetime.now()))
+        logging.info("{} | End: {} - {}".format(f.__name__, datetime.now(), id))
         logging.info("#" * 80)
         return retFunc
 
